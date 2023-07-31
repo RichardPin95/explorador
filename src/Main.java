@@ -16,7 +16,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         String file = "archivo.txt";
         String opc = "";
-        int totPuntos=0;
+        int totPuntos = 0, punto = 0;
         System.out.println("INGRESE UNA LISTA DE FRASES O PALABRAS\nO ESCRIBA exit PARA FINALIZAR");
         do {
             System.out.print(">");
@@ -24,16 +24,20 @@ public class Main {
             arr.add(opc);
         } while (!opc.equals("exit"));
 
-        System.out.println(arr);
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(new FileInputStream(file), StandardCharsets.ISO_8859_1))) {
             String linea;
             while ((linea = br.readLine()) != null) {
-                totPuntos += buscarOcurrencias(arr, linea);
+                punto = buscarOcurrencias(arr, linea);
+                if (punto != 0) {
+                    System.out.println(linea);
+                }
+                totPuntos += punto;
             }
         } catch (IOException e) {
             System.err.println("Error al leer el archivo: " + e.getMessage());
         }
+        System.out.println("Total de puntos: " + totPuntos);
     }
 
     public static int buscarOcurrencias(ArrayList<String> listaPalabras, String frase) {
